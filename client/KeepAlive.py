@@ -17,10 +17,13 @@ class KeepAlive:
         print (f"UDP target port: {udp_port}")
         print (f"message: {msg_str}")
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # IPv4 and UDP
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # Allow address/port reuse immediately 
+
 
     def hello(self): # this method is invoked as a thread
-        while True:
-            self.sock.sendto(bytes(self.msg_str, 'utf-8'), (self.udp_ip, self.udp_port))
-            self.msg_count = self.msg_count + 1
-            # print (f"Client: message {self.msg_count} sent to server")
-            t.sleep(1)
+        while True: 
+                self.sock.sendto(bytes(self.msg_str, 'utf-8'), (self.udp_ip, self.udp_port))
+                self.msg_count = self.msg_count + 1
+                data, addr = self.sock.recvfrom(1024)
+                print(f"Client: message {data} received from server")
+                t.sleep(1)

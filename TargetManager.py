@@ -30,13 +30,12 @@ if __name__ == "__main__":
     ping = ka.KeepAlive("localhost", 5005, "Hello Worldlings!" )
     t0 = Thread(target=lambda: ping.hello()()) # run keep alive thread
     t0.start()
-    # time1.repeat(1000, lambda: ping.hello()) # run keep alive every 1s
-
+ 
     # init and start thread for target simulator
     sim = ts.TargetSimulator("localhost", 5005)
     t1 = Thread(target=lambda: sim.receiver())
     t1.start()
-
+    
     # display any receive counts from the target
     sim_rx_cnt_label = Text(app, text="Target Receive: ", grid=[0, 2])
     sim_rx_cnt = Text(app, text="0", grid=[1,2])
@@ -44,3 +43,4 @@ if __name__ == "__main__":
     sim_rx_cnt.value.rjust(40)
 
     app.display() # display loop
+    

@@ -26,5 +26,5 @@ class TestMe:
         out = in_a + in_b
         return out
     
-import doctest # enable doctest
-doctest.testmod()
+# import doctest # enable doctest
+# doctest.testmod()

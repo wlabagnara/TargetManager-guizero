@@ -1,7 +1,8 @@
 '''
-Target Simulator - Simulates a target system that Target Manager is 'talking' to.
+Target Simulator - Simulates a target system (Server) that Target Manager Client is 'talking' to.
 '''
 import socket
+import time as t
 
 class TargetSimulator:
 
@@ -21,12 +22,7 @@ class TargetSimulator:
 
     def receiver(self):  # this method is invoked as a thread 
         while True:
-            try:
                 data, addr = self.sock.recvfrom(1024)
                 self.msg_count = self.msg_count + 1
                 print (f"Server: message {self.msg_count} received from client")
-                # self.sock.sendto(bytes(self.msg_count, 'utf-8'), (self.udp_ip, self.udp_port))
-
-            except:
-                print(f"Server: receive data timeout!")
-    
+                self.sock.sendto(str.encode(str(self.msg_count)), addr)
